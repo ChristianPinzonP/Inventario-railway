@@ -1,0 +1,78 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'org.joinfaces' version '4.7.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'jacoco'
+}
+plugins {
+    id "org.sonarqube" version "3.5.0.2730"
+}
+
+jacoco {
+    toolVersion = '0.8.7'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "JoseJuanjo13_Inventario"
+        property "sonar.organization", "josejuanjo13"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+group 'co.edu.uniquindio.inventario'
+version '1.0-SNAPSHOT'
+description 'Inventario es un programa para la gestion del inventario de un centro medico'
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.primefaces:primefaces:12.0.0'
+    implementation 'org.joinfaces:jsf-spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.primefaces:primefaces:11.0.0'
+    runtimeOnly 'mysql:mysql-connector-java'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml {
+            enabled true
+        }
+        html {
+            enabled true
+        }
+    }
+    //finalizedBy jacocoTestCoverageVerification
+    // se habilita una vez tenga mas pruebas hechas
+}
+jacocoTestCoverageVerification {   //Verifies the code coverage rule if enabled.
+    violationRules {
+        rule {
+            enabled = true
+            limit {
+                minimum = 0.25
+            }
+        }
+    }
+}
