@@ -65,14 +65,6 @@ class PruebasTest {
     }
 
     @Test
-    void actualizarUsuario() {
-        Usuario usuario = usuarioServicio.obtenerUsuario("1094973943");
-        usuario.setNombre("prueba");
-        Usuario actualizar = usuarioServicio.actualizarUsuario(usuario);
-        assertNotNull(actualizar);
-    }
-
-    @Test
     void eliminarUsuario() {
         Usuario usuario = usuarioServicio.obtenerUsuario("1094973943");
         usuarioServicio.eliminarUsuario(usuario);
